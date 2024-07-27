@@ -34,12 +34,15 @@ void updatePlayer(Map map, Player *p, int dir) {
         case KEY_LEFT:
             p->angle += p->rotVel;
             if (p->angle >= 360.0) p->angle = p->angle - 360.0;
-        break;
+        return;
 
         case KEY_RIGHT:
             p->angle -= p->rotVel;
             if (p->angle <= 0.0) p->angle = 360.0 - p->angle;
-        break; 
+        return;
+
+        default:
+        return;
     }
 
     if (map.grid[(int)floor(newY)][(int)floor(newX)] == 0) {

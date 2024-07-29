@@ -29,13 +29,23 @@ void getGridIndex(int *gx, int *gy, Vec2 pt, double angle, bool vertical) {
     *gy = (int)pt.y - (((0.0 < angle && angle < 180.0 && vertical) ? 1 : 0));
 }
 
+double getAngle(double angle, double offset) {
+    double new = angle + offset;
+    if (new < 0.0) {
+        new += 360.0;
+    } else if (new >= 360.0) {
+        new -= 360.0;
+    }
+    return new;
+}
+
 void castRay(Map map, Player p, int width, int height, WINDOW *win) {
     Vec2 p1, p2, vertStart, horizStart;
     double i, dist1, dist2, angle, slope, offset, vd, hd;
     int gridX, gridY;
 
     for (offset = -FOV/2.0; offset <= FOV/2.0; offset += ANGLE_INCREMENT) {
-        angle = p.angle + offset;
+        angle = getAngle(p.angle, offset);
         slope = tan(deg2rad(angle));
      
         vertStart.x = (90 < angle && angle < 270) ? floor(p.x) : ceil(p.x);
